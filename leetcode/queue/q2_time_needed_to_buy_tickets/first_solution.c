@@ -1,17 +1,28 @@
+#include <string.h>
+
 int timeRequiredToBuy(int* tickets, int ticketsSize, int k) {
     int time = 0;
-    int i = 0;
+    int size = ticketsSize;
 
     while (tickets[k] > 0) {
-        if (tickets[i] > 0) {
-            tickets[i]--;
+        if (tickets[0] > 0) {
+            tickets[0]--;
             time++;
 
-            if (i == k && tickets[k] == 0)
+            if (k == 0 && tickets[0] == 0)
                 return time;
         }
 
-        i = (i + 1) % ticketsSize;
+       
+        int temp = tickets[0];
+        memmove(tickets, tickets + 1, (size - 1) * sizeof(int));
+        tickets[size - 1] = temp;
+
+       
+        if (k == 0)
+            k = size - 1;
+        else
+            k--;
     }
 
     return time;
